@@ -42,7 +42,7 @@ const Timeline = ({ ride }: Props) => {
     <View style={styles.container}>
       <View style={styles.timelineContainer}>
         <View style={styles.iconContainer}>
-          <Entypo name="circle" size={22} color={R.colors.secondary} />
+          <Entypo name="circle" size={22} color={R.colors.normal} />
         </View>
         <View style={styles.address}>
           <Content style={styles.titlePickup}>Pick up</Content>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   address: { marginLeft: 18, marginTop: 4 },
-  titlePickup: { fontWeight: "bold", color: R.colors.secondary },
+  titlePickup: { fontWeight: "bold", color: R.colors.normal },
   titleDestination: { fontWeight: "bold", color: R.colors.primary },
 });
 
