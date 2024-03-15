@@ -13,10 +13,6 @@ const Directions = ({ ride }: Props) => {
 
   useEffect(() => {
     setTimeout(() => {
-      //   map.current?.fitToSuppliedMarkers(["pickup", "location"], {
-      //     animated: true,
-      //     edgePadding: { top: 70, bottom: 70, left: 70, right: 70 },
-      //   });
       map.current?.fitToElements();
     }, 1000);
   }, []);
@@ -32,6 +28,7 @@ const Directions = ({ ride }: Props) => {
         <MapView
           ref={(v) => (map.current = v)}
           style={{ height: layout.height, width: layout.width }}
+          showsUserLocation
         >
           <MapMarker
             identifier="pickup"
