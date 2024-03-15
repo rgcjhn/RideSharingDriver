@@ -1,9 +1,11 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import Button from "components/Button";
+import { useAppDispatch, useAppSelector } from "hooks";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import R from "res/R";
+import { ridesActions } from "store/rides/slice";
 
 import Directions from "./components/Directions";
 import Status from "./components/Status";
@@ -13,7 +15,21 @@ import UserProfile from "./components/UserProfile";
 type Props = StackScreenProps<StackParams, "Details">;
 
 const DetailsScreen = ({ navigation, route }: Props) => {
-  const { ride } = route.params;
+  const { rideId } = route.params;
+
+  const ride = useAppSelector((s) => s.rides.find((s) => s.id === rideId));
+
+  const dispatch = useAppDispatch();
+
+  const onAcceptRide = () => {
+    if (!ride) return;
+    const { setRide } = ridesActions;
+    dispatch(setRide({ ...ride, status: "accepted" }));
+  };
+
+  if (!ride) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -23,7 +39,11 @@ const DetailsScreen = ({ navigation, route }: Props) => {
       <Status ride={ride} />
       <SafeAreaView edges={["bottom"]}>
         <View style={styles.buttons}>
-          <Button label="ACCEPT RIDE" margins={{ bottom: 12 }} />
+          <Button
+            label="ACCEPT RIDE"
+            margins={{ bottom: 12 }}
+            onPress={onAcceptRide}
+          />
           <Button label="GO BACK" look="outlined" onPress={navigation.goBack} />
         </View>
       </SafeAreaView>

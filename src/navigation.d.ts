@@ -1,4 +1,4 @@
 type StackParams = {
   Home: undefined;
-  Details: { ride: Ride };
+  Details: { rideId: string };
 };
