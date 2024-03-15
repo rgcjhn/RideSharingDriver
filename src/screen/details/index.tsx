@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { useAppSelector } from "hooks";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
+import { Alert, StyleSheet, View } from "react-native";
 import R from "res/R";
 
 import ActionButton from "./components/ActionButton";
@@ -16,6 +16,33 @@ const DetailsScreen = ({ navigation, route }: Props) => {
   const { rideId } = route.params;
 
   const ride = useAppSelector((s) => s.rides.find((s) => s.id === rideId));
+
+  useEffect(
+    () =>
+      navigation.addListener("beforeRemove", (e) => {
+        if (ride?.status === "pending") {
+          return;
+        }
+
+        // Prevent default behavior of leaving the screen
+        e.preventDefault();
+
+        Alert.alert(
+          "Are you sure you want to leave this?",
+          "Leaving will invalidate your ride.",
+          [
+            { text: "Continue", style: "cancel", onPress: () => {} },
+            {
+              text: "Leave",
+              style: "destructive",
+              // This will continue the action that had triggered the removal of the screen
+              onPress: () => navigation.dispatch(e.data.action),
+            },
+          ]
+        );
+      }),
+    [navigation, ride?.status]
+  );
 
   if (!ride) {
     return null;
