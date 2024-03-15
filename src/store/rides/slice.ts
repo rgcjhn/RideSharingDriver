@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as Location from "expo-location";
+import moment from "moment";
 import R from "res/R";
 
 const initialState: Ride[] = [];
@@ -10,6 +11,18 @@ export const fetchRides = createAsyncThunk(
     let mockData: Ride[] = require("../../rides.json");
 
     mockData = mockData.map((v) => {
+      const pickupDate = moment().add(
+        Math.floor(Math.random() * 10 + 10),
+        "minutes"
+      );
+      const postDate = moment().subtract(
+        Math.floor(Math.random() * 10 + 1),
+        "minutes"
+      );
+
+      v.pickupTime = pickupDate.toISOString();
+      v.timestamp = postDate.toISOString();
+
       const pickup = R.helpers.randomCircumferencePoint(
         userLocation.coords,
         1500 // 1.5km

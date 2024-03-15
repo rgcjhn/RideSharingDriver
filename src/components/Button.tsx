@@ -47,9 +47,10 @@ export default function Button(props: PressableProps & Props) {
           marginBottom: margins.bottom,
           marginRight: margins.right,
           marginLeft: margins.left,
+          opacity: loading || props.disabled ? 0.5 : 1,
         },
       ]}
-      disabled={loading}
+      disabled={loading || props.disabled}
     >
       {loading ? (
         <ActivityIndicator color={R.colors.white} />

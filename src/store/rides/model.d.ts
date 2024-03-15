@@ -17,6 +17,6 @@ type Ride = {
     | "started"
     | "picked-up"
     | "dropped-off"; // Status of the ride request
-  pickupTime: Date; // Time when the ride is scheduled for pickup
-  timestamp: Date; // Timestamp of when the ride request was made
+  pickupTime: string; // Time when the ride is scheduled for pickup
+  timestamp: string; // Timestamp of when the ride request was made
 };

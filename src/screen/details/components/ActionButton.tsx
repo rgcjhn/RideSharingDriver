@@ -59,7 +59,7 @@ const ActionButton = ({ ride, navigation }: Props) => {
 
         {ride.status === "started" && (
           <Button
-            label="DROPPED-OFF"
+            label="DROP-OFF"
             margins={{ bottom: 12 }}
             onPress={() => setStatus("dropped-off")}
             loading={loading}
@@ -76,9 +76,10 @@ const ActionButton = ({ ride, navigation }: Props) => {
 
         {ride.status === "accepted" && (
           <Button
-            label="DECLINE"
+            label="CANCEL"
             look="outlined"
             onPress={() => navigation.goBack()}
+            disabled={loading}
           />
         )}
       </View>

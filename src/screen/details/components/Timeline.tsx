@@ -1,6 +1,7 @@
 import { MaterialIcons, Entypo } from "@expo/vector-icons";
 import Content from "components/Content";
 import * as Location from "expo-location";
+import moment from "moment";
 import React, { memo, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import DashedLine from "react-native-dashed-line";
@@ -38,6 +39,8 @@ const Timeline = ({ ride }: Props) => {
     task();
   }, []);
 
+  console.log(destinationAddress);
+
   return (
     <View style={styles.container}>
       <View style={styles.timelineContainer}>
@@ -45,9 +48,11 @@ const Timeline = ({ ride }: Props) => {
           <Entypo name="circle" size={22} color={R.colors.normal} />
         </View>
         <View style={styles.address}>
-          <Content style={styles.titlePickup}>Pick up</Content>
-          <Content>{pickupAddress[0]?.name}</Content>
-          <Content>{pickupAddress[0]?.district}</Content>
+          <Content style={styles.titlePickup}>Pick up location</Content>
+          <Content>
+            {destinationAddress[0]?.name}, {pickupAddress[0]?.district}
+          </Content>
+          <Content>Pick up {moment(ride.pickupTime).fromNow()}</Content>
         </View>
       </View>
 
@@ -69,8 +74,9 @@ const Timeline = ({ ride }: Props) => {
         </View>
         <View style={styles.address}>
           <Content style={styles.titleDestination}>Destination</Content>
-          <Content>{destinationAddress[0]?.name}</Content>
-          <Content>{destinationAddress[0]?.district}</Content>
+          <Content>
+            {destinationAddress[0]?.name}, {destinationAddress[0]?.district}
+          </Content>
         </View>
       </View>
     </View>
@@ -87,7 +93,7 @@ const styles = StyleSheet.create({
   line: {
     position: "absolute",
     top: 48,
-    bottom: 56,
+    bottom: 40,
     left: 32.25,
   },
   iconContainer: {

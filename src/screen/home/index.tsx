@@ -49,7 +49,7 @@ const HomeScreen = ({ navigation }: Props) => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     setPermissionStatus(status);
     if (status !== "granted") {
-      setReady(true);
+      !ready && setReady(true);
       showMessage({
         message: "Permission to access location was denied",
         duration: 2000,

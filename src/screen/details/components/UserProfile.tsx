@@ -24,7 +24,7 @@ const UserProfile = ({ ride }: Props) => {
         }}
       />
       <View style={styles.profile}>
-        <Content>{user?.name}</Content>
+        <Content style={styles.name}>{user?.name}</Content>
         <Content>
           <Entypo name="globe" color={R.colors.faded} size={12} />
           &nbsp;
@@ -56,6 +56,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginLeft: 4,
     color: R.colors.faded,
+  },
+  name: {
+    fontSize: 17,
+    fontWeight: "bold",
   },
 });
 
