@@ -52,20 +52,22 @@ const HomeScreen = ({ navigation }: Props) => {
         showsUserLocation
         followsUserLocation
       >
-        {rides.map((ride) => {
-          return (
-            <MapMarker
-              key={ride.id}
-              coordinate={{
-                latitude: ride.pickupLocation.latitude,
-                longitude: ride.pickupLocation.longitude,
-              }}
-              onPress={() => {
-                navigation.navigate("Details", { rideId: ride.id });
-              }}
-            />
-          );
-        })}
+        {rides
+          .filter((ride) => ride.status === "pending")
+          .map((ride) => {
+            return (
+              <MapMarker
+                key={ride.id}
+                coordinate={{
+                  latitude: ride.pickupLocation.latitude,
+                  longitude: ride.pickupLocation.longitude,
+                }}
+                onPress={() => {
+                  navigation.navigate("Details", { rideId: ride.id });
+                }}
+              />
+            );
+          })}
       </MapView>
     </View>
   );
