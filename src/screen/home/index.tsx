@@ -64,9 +64,16 @@ const HomeScreen = ({ navigation }: Props) => {
       longitudeDelta: 0.0821,
     });
 
-    const { fetchRides } = ridesActions;
-    await dispatch(fetchRides(location)).unwrap();
-    setReady(true);
+    try {
+      const { fetchRides } = ridesActions;
+      await dispatch(fetchRides(location)).unwrap();
+      setReady(true);
+    } catch {
+      showMessage({
+        message: "Failed to retrieve data: Error fetching data",
+        duration: 2000,
+      });
+    }
   };
 
   if (permissionStatus !== "granted" && ready) {
