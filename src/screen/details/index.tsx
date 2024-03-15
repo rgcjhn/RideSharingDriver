@@ -1,8 +1,9 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import { useAppSelector } from "hooks";
+import { useAppDispatch, useAppSelector } from "hooks";
 import React, { useEffect } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import R from "res/R";
+import { ridesActions } from "store/rides/slice";
 
 import ActionButton from "./components/ActionButton";
 import Directions from "./components/Directions";
@@ -17,10 +18,12 @@ const DetailsScreen = ({ navigation, route }: Props) => {
 
   const ride = useAppSelector((s) => s.rides.find((s) => s.id === rideId));
 
+  const dispatch = useAppDispatch();
+
   useEffect(
     () =>
       navigation.addListener("beforeRemove", (e) => {
-        if (ride?.status === "pending") {
+        if (!ride || ride?.status === "pending") {
           return;
         }
 
@@ -36,12 +39,16 @@ const DetailsScreen = ({ navigation, route }: Props) => {
               text: "Leave",
               style: "destructive",
               // This will continue the action that had triggered the removal of the screen
-              onPress: () => navigation.dispatch(e.data.action),
+              onPress: () => {
+                const { setRide } = ridesActions;
+                dispatch(setRide({ ...ride, status: "declined" }));
+                navigation.dispatch(e.data.action);
+              },
             },
           ]
         );
       }),
-    [navigation, ride?.status]
+    [navigation, ride]
   );
 
   if (!ride) {
