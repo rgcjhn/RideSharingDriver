@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StyleSheet, View } from "react-native";
 import FlashMessage from "react-native-flash-message";
 import { Provider } from "react-redux";
+import DetailsScreen from "screen/details";
 import HomeScreen from "screen/home";
 import { store } from "store/index";
 
@@ -18,6 +19,15 @@ const App = () => {
           <Stack.Navigator>
             <Stack.Group>
               <Stack.Screen name="Home" component={HomeScreen} />
+            </Stack.Group>
+            <Stack.Group
+              screenOptions={{
+                presentation: "modal",
+                headerShown: false,
+                cardStyle: { backgroundColor: "transparent" },
+              }}
+            >
+              <Stack.Screen name="Details" component={DetailsScreen} />
             </Stack.Group>
           </Stack.Navigator>
         </NavigationContainer>
