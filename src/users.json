@@ -1,22 +1,27 @@
 [
   {
     "id": "3c746da0",
-    "name": "Marcel Erickson"
+    "name": "Marcel Erickson",
+    "image": "https://randomuser.me/api/portraits/men/43.jpg"
   },
   {
     "id": "05202e30",
-    "name": "Aden Hunt"
+    "name": "Aden Hunt",
+    "image": "https://randomuser.me/api/portraits/men/19.jpg"
   },
   {
     "id": "e50b759b",
-    "name": "Sammy Mccarthy"
+    "name": "Ezra Meadows",
+    "image": "https://randomuser.me/api/portraits/women/94.jpg"
   },
   {
     "id": "b618d04b",
-    "name": "Jayvon Mills"
+    "name": "Jayvon Mills",
+    "image": "https://randomuser.me/api/portraits/men/7.jpg"
   },
   {
     "id": "6ef4f0bc",
-    "name": "Alina Krause"
+    "name": "Alina Krause",
+    "image": "https://randomuser.me/api/portraits/women/85.jpg"
   }
 ]

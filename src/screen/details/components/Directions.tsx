@@ -1,8 +1,8 @@
-import { FontAwesome6 } from "@expo/vector-icons";
+import DropOffMarker from "components/DropOffMarker";
+import UserMarker from "components/UserMarker";
 import React, { useEffect, useRef, useState } from "react";
 import { LayoutRectangle, StyleSheet, View } from "react-native";
-import MapView, { MapMarker } from "react-native-maps";
-import R from "res/R";
+import MapView from "react-native-maps";
 type Props = {
   ride: Ride;
 };
@@ -30,35 +30,8 @@ const Directions = ({ ride }: Props) => {
           style={{ height: layout.height, width: layout.width }}
           showsUserLocation
         >
-          <MapMarker
-            identifier="pickup"
-            coordinate={{
-              latitude: ride.pickupLocation.latitude,
-              longitude: ride.pickupLocation.longitude,
-            }}
-            description="Pickup"
-          >
-            <FontAwesome6
-              name="location-pin"
-              size={32}
-              color={R.colors.secondary}
-            />
-          </MapMarker>
-          <MapMarker
-            identifier="destination"
-            coordinate={{
-              latitude: ride.destination.latitude,
-              longitude: ride.destination.longitude,
-            }}
-            pinColor={R.colors.primary}
-            description="Destination"
-          >
-            <FontAwesome6
-              name="location-pin"
-              size={32}
-              color={R.colors.primary}
-            />
-          </MapMarker>
+          <UserMarker ride={ride} />
+          <DropOffMarker ride={ride} />
         </MapView>
       )}
     </View>

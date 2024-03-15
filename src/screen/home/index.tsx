@@ -1,10 +1,11 @@
 import { StackScreenProps } from "@react-navigation/stack";
+import UserMarker from "components/UserMarker";
 import * as Location from "expo-location";
 import { useAppDispatch, useAppSelector } from "hooks";
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
-import MapView, { MapMarker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { ridesActions } from "store/rides/slice";
 
 type Props = StackScreenProps<StackParams, "Home">;
@@ -48,20 +49,15 @@ const HomeScreen = ({ navigation }: Props) => {
       >
         {rides
           .filter((ride) => ride.status === "pending")
-          .map((ride) => {
-            return (
-              <MapMarker
-                key={ride.id}
-                coordinate={{
-                  latitude: ride.pickupLocation.latitude,
-                  longitude: ride.pickupLocation.longitude,
-                }}
-                onPress={() => {
-                  navigation.navigate("Details", { rideId: ride.id });
-                }}
-              />
-            );
-          })}
+          .map((ride) => (
+            <UserMarker
+              key={ride.id}
+              ride={ride}
+              onPress={() => {
+                navigation.navigate("Details", { rideId: ride.id });
+              }}
+            />
+          ))}
       </MapView>
     </View>
   );

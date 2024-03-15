@@ -15,14 +15,12 @@ const UserProfile = ({ ride }: Props) => {
     s.users.find((user) => user.id === ride.userId)
   );
 
-  console.log(moment());
-
   return (
     <View style={styles.container}>
       <Image
         style={styles.img}
         source={{
-          uri: "https://cdn.pixabay.com/photo/2018/11/13/22/01/avatar-3814081_1280.png",
+          uri: user?.image,
         }}
       />
       <View style={styles.profile}>
