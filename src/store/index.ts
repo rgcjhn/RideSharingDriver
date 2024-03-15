@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 
-import ridesReducer from "./rides/reducer";
-import usersReducer from "./users/reducer";
+import driverSlice from "./driver/slice";
+import ridesSlice from "./rides/slice";
+import usersSlice from "./users/slice";
 
 const combinedReducers = combineReducers({
-  rides: ridesReducer,
-  users: usersReducer,
+  driver: driverSlice.reducer,
+  rides: ridesSlice.reducer,
+  users: usersSlice.reducer,
 });
 
 export const store = configureStore({

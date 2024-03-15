@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import MapView, { MapMarker, PROVIDER_GOOGLE } from "react-native-maps";
-import { fetchRides } from "store/rides/reducer";
+import { ridesActions } from "store/rides/slice";
 
 type Props = StackScreenProps<StackParams, "Home">;
 
@@ -16,6 +16,7 @@ const HomeScreen = ({ navigation }: Props) => {
   const map = useRef<MapView | null>();
 
   useEffect(() => {
+    const { fetchRides } = ridesActions;
     dispatch(fetchRides());
 
     const getLocationPermission = async () => {
@@ -60,7 +61,7 @@ const HomeScreen = ({ navigation }: Props) => {
                 longitude: ride.pickupLocation.longitude,
               }}
               onPress={() => {
-                navigation.navigate("Details", { ride });
+                navigation.navigate("Details", { rideId: ride.id });
               }}
             />
           );
