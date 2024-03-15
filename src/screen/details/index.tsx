@@ -23,7 +23,11 @@ const DetailsScreen = ({ navigation, route }: Props) => {
   useEffect(
     () =>
       navigation.addListener("beforeRemove", (e) => {
-        if (!ride || ride?.status === "pending") {
+        if (
+          !ride ||
+          ride?.status === "pending" ||
+          ride?.status === "dropped-off"
+        ) {
           return;
         }
 
