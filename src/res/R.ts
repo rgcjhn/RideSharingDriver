@@ -6,12 +6,12 @@ const colors = {
   white: "#fff",
   black: "#000",
   invisible: "transparent",
-  pending: "#F1C231",
-  accepted: "#EEEEEE",
+  pending: "#546E7A",
+  accepted: "#2E7D32",
   declined: "#CC0100",
-  started: "#F1C231",
-  "picked-up": "#526cc1",
-  "dropped-off": "#6AA74F",
+  started: "#2E7D32",
+  "picked-up": "#2E7D32",
+  "dropped-off": "#f3bc4c",
 };
 
 const R = {
