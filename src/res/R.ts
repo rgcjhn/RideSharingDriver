@@ -1,4 +1,5 @@
 import helpers from "./helpers";
+import images from "./images";
 
 const colors = {
   primary: "#f3bc4c",
@@ -19,6 +20,7 @@ const colors = {
 const R = {
   colors,
   helpers,
+  images,
 };
 
 export default R;
