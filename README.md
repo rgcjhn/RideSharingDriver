@@ -12,6 +12,10 @@ The Ride-Sharing Driver App is a simplified ride-sharing driver mobile applicati
 - View passenger information
 - Utilizes Redux for state management
 
+### Demo
+https://github.com/rgcjhn/RideSharingDriver/assets/15217508/29edcac1-c38e-405f-bc06-62cfc853d1a2
+
+
 ## Installation
 
 Follow these steps to install and run the project locally:
