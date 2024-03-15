@@ -26,7 +26,8 @@ const DetailsScreen = ({ navigation, route }: Props) => {
         if (
           !ride ||
           ride?.status === "pending" ||
-          ride?.status === "dropped-off"
+          ride?.status === "dropped-off" ||
+          ride?.status === "declined"
         ) {
           return;
         }

@@ -23,6 +23,12 @@ const ActionButton = ({ ride, navigation }: Props) => {
     setLoading(false);
   };
 
+  const onDecline = () => {
+    const { setRide } = ridesActions;
+    dispatch(setRide({ ...ride, status: "declined" }));
+    navigation.goBack();
+  };
+
   if (ride.status === "dropped-off") {
     return <SafeAreaView edges={["bottom"]} />;
   }
@@ -67,11 +73,7 @@ const ActionButton = ({ ride, navigation }: Props) => {
         )}
 
         {ride.status === "pending" && (
-          <Button
-            label="GO BACK"
-            look="outlined"
-            onPress={() => navigation.goBack()}
-          />
+          <Button label="DECLINE" look="outlined" onPress={() => onDecline()} />
         )}
 
         {ride.status === "accepted" && (
