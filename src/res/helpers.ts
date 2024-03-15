@@ -29,8 +29,10 @@ const randomCircumferencePoint = (
   const sinTheta = Math.sin(theta);
   const cosTheta = Math.cos(theta);
 
-  let rLatitude, rLongitude;
-  rLatitude = Math.asin(sinLat * cosTheta + cosLat * sinTheta * cosBearing);
+  let rLongitude;
+  const rLatitude = Math.asin(
+    sinLat * cosTheta + cosLat * sinTheta * cosBearing
+  );
 
   rLongitude =
     toRadians(centerPoint.longitude) +
