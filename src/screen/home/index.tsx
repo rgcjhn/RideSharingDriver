@@ -1,8 +1,9 @@
+import { useIsFocused } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import UserMarker from "components/UserMarker";
 import * as Location from "expo-location";
 import { useAppDispatch, useAppSelector } from "hooks";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -11,9 +12,12 @@ import { ridesActions } from "store/rides/slice";
 type Props = StackScreenProps<StackParams, "Home">;
 
 const HomeScreen = ({ navigation }: Props) => {
+  const [ready, setReady] = useState(false);
+
   const rides = useAppSelector((s) => s.rides);
 
   const dispatch = useAppDispatch();
+  const focused = useIsFocused();
   const map = useRef<MapView | null>();
 
   useEffect(() => {
@@ -33,10 +37,27 @@ const HomeScreen = ({ navigation }: Props) => {
         longitudeDelta: 0.0821,
       });
 
-      dispatch(fetchRides(location));
+      await dispatch(fetchRides(location)).unwrap();
+      setReady(true);
     };
     getLocationPermission();
   }, []);
+
+  useEffect(() => {
+    // If no rides are available, display an error message
+    if (
+      ready &&
+      focused &&
+      rides.filter((ride) => ride.status === "pending").length === 0
+    ) {
+      setTimeout(() => {
+        showMessage({
+          message: "Sorry, no nearby rides found",
+          duration: 2000,
+        });
+      }, 1000);
+    }
+  }, [ready, rides, focused]);
 
   return (
     <View style={styles.container}>
