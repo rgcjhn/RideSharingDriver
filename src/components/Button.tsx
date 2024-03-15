@@ -1,10 +1,16 @@
 import React from "react";
-import { StyleSheet, Pressable, PressableProps } from "react-native";
+import {
+  StyleSheet,
+  Pressable,
+  PressableProps,
+  ActivityIndicator,
+} from "react-native";
 import R from "res/R";
 
 import Content from "./Content";
 
 type Props = {
+  loading?: boolean;
   look?: "filled" | "outlined";
   label?: string;
   margins?: {
@@ -17,6 +23,7 @@ type Props = {
 
 export default function Button(props: PressableProps & Props) {
   const {
+    loading = false,
     look = "filled",
     label = "",
     margins = { top: 0, right: 0, left: 0, bottom: 0 },
@@ -42,8 +49,13 @@ export default function Button(props: PressableProps & Props) {
           marginLeft: margins.left,
         },
       ]}
+      disabled={loading}
     >
-      <Content style={selectedTextStyle}>{label}</Content>
+      {loading ? (
+        <ActivityIndicator color={R.colors.white} />
+      ) : (
+        <Content style={selectedTextStyle}>{label}</Content>
+      )}
     </Pressable>
   );
 }
