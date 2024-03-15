@@ -17,7 +17,6 @@ const HomeScreen = ({ navigation }: Props) => {
 
   useEffect(() => {
     const { fetchRides } = ridesActions;
-    dispatch(fetchRides());
 
     const getLocationPermission = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -29,16 +28,11 @@ const HomeScreen = ({ navigation }: Props) => {
       map.current?.animateToRegion({
         longitude: location.coords.longitude,
         latitude: location.coords.latitude,
-        latitudeDelta: 0.0622,
-        longitudeDelta: 0.0221,
+        latitudeDelta: 0.1222,
+        longitudeDelta: 0.0821,
       });
 
-      const regionName = await Location.reverseGeocodeAsync({
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude,
-      });
-
-      console.log(regionName, "nothing");
+      dispatch(fetchRides(location));
     };
     getLocationPermission();
   }, []);

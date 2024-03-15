@@ -1,13 +1,33 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import * as Location from "expo-location";
 import R from "res/R";
 
 const initialState: Ride[] = [];
 
-export const fetchRides = createAsyncThunk("ride/fetchRides", async () => {
-  const mockData = require("../../rides.json");
-  await R.helpers.timeout(2000);
-  return mockData;
-});
+export const fetchRides = createAsyncThunk(
+  "ride/fetchRides",
+  async (userLocation: Location.LocationObject) => {
+    let mockData: Ride[] = require("../../rides.json");
+
+    mockData = mockData.map((v) => {
+      const pickup = R.helpers.randomCircumferencePoint(
+        userLocation.coords,
+        1500 // 1.5km
+      );
+      const destination = R.helpers.randomCircumferencePoint(
+        pickup,
+        1500 // 1.5km
+      );
+      v.pickupLocation = pickup;
+      v.destination = destination;
+
+      return v;
+    });
+
+    await R.helpers.timeout(2000);
+    return mockData;
+  }
+);
 
 export const setRide = createAsyncThunk("ride/setRide", async (ride: Ride) => {
   await R.helpers.timeout(2000);
