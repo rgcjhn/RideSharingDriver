@@ -39,8 +39,6 @@ const Timeline = ({ ride }: Props) => {
     task();
   }, []);
 
-  console.log(destinationAddress);
-
   return (
     <View style={styles.container}>
       <View style={styles.timelineContainer}>

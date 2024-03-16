@@ -5,7 +5,7 @@ import UserMarker from "components/UserMarker";
 import * as Location from "expo-location";
 import { useAppDispatch, useAppSelector } from "hooks";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { AppState, Linking, StyleSheet, View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import R from "res/R";
@@ -23,6 +23,7 @@ const HomeScreen = ({ navigation }: Props) => {
   const dispatch = useAppDispatch();
   const focused = useIsFocused();
   const map = useRef<MapView | null>();
+  const appState = useRef(AppState.currentState);
 
   useEffect(() => {
     getLocationPermission();
@@ -45,11 +46,27 @@ const HomeScreen = ({ navigation }: Props) => {
     }
   }, [ready, rides, permissionStatus, focused]);
 
+  useEffect(() => {
+    // If location services are enabled in the settings, reattempt fetching ride requests
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        if (permissionStatus !== "granted") {
+          getLocationPermission();
+        }
+      }
+      appState.current = nextAppState;
+    });
+
+    return () => subscription.remove();
+  }, [permissionStatus]);
+
   const getLocationPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     setPermissionStatus(status);
     if (status !== "granted") {
-      !ready && setReady(true);
       showMessage({
         message: "Permission to access location was denied",
         duration: 2000,
@@ -76,13 +93,14 @@ const HomeScreen = ({ navigation }: Props) => {
     }
   };
 
-  if (permissionStatus !== "granted" && ready) {
+  // Conceal map UI when location services are denied
+  if (permissionStatus && permissionStatus !== "granted") {
     return (
       <View style={styles.noPermission}>
         <Content>Permission to access location is required</Content>
         <Content
           style={styles.requestPermission}
-          onPress={() => getLocationPermission()}
+          onPress={() => Linking.openSettings()}
         >
           Enable location
         </Content>
